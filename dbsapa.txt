@@ -22,7 +22,7 @@ CREATE TABLE SchoolCoordinator(
 );
 
 CREATE TABLE HospitalCoordinator(
-	hospital_coordinator_id INT AUTO_INREMENT PRIMARY KEY,
+	hospital_coordinator_id INT AUTO_INCREMENT PRIMARY KEY,
 email VARCHAR(50) NOT NULL,
 	firstname VARCHAR(50) NOT NULL,
 	middlename VARCHAR(50) NOT NULL,
