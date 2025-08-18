@@ -23,12 +23,12 @@ CREATE TABLE SchoolCoordinator(
 
 CREATE TABLE HospitalCoordinator(
 	hospital_coordinator_id INT AUTO_INREMENT PRIMARY KEY,
-	email VARCHAR(50) NOT NULL,
-	firstnamename VARCHAR(50) NOT NULL,
+email VARCHAR(50) NOT NULL,
+	firstname VARCHAR(50) NOT NULL,
 	middlename VARCHAR(50) NOT NULL,
-	lastname VARCHAR(50) NOT NULL,
+	lastname VARCHAR(50) NOT NULL,	
 	password VARCHAR(50) NOT NULL,
-	is_approved BOOLEAN DEFAULT FALSE,
+	is_aproved BOOLEAN DEFAULT FALSE,
 	admin_id INT,
 	FOREIGN KEY (admin_id) REFERENCES AdminSapa(admin_id) ON DELETE CASCADE
 );
