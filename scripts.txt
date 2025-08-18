@@ -64,7 +64,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE HandleHospitalCoordinator(
+CREATE PROCEDURE HandleHospitalApproval(
 	IN a_admin_id INT,
 	IN a_hospital_coordinator_id INT,
 	IN a_status VARCHAR(25)
