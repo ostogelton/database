@@ -1,0 +1,42 @@
+CREATE DATABASE dbsapa;
+
+USE dbsapa;
+
+CREATE TABLE AdminSapa(
+	admin_id INT AUTO_INCREMENT PRIMARY KEY,
+	fullname VARCHAR(50) NOT NULL,
+	username VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE SchoolCoordinator(
+	school_coordinator_id INT AUTO_INCREMENT PRIMARY KEY,
+	email VARCHAR(50) NOT NULL,
+	firstname VARCHAR(50) NOT NULL,
+	middlename VARCHAR(50) NOT NULL,
+	lastname VARCHAR(50) NOT NULL,	
+	password VARCHAR(50) NOT NULL,
+	is_aproved BOOLEAN DEFAULT FALSE,
+	admin_id INT,
+	FOREIGN KEY (admin_id) REFERENCES AdminSapa(admin_id) ON DELETE CASCADE
+);
+
+CREATE TABLE HospitalCoordinator(
+	hospital_coordinator_id INT AUTO_INREMENT PRIMARY KEY,
+	email VARCHAR(50) NOT NULL,
+	firstnamename VARCHAR(50) NOT NULL,
+	middlename VARCHAR(50) NOT NULL,
+	lastname VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	is_approved BOOLEAN DEFAULT FALSE,
+	admin_id INT,
+	FOREIGN KEY (admin_id) REFERENCES AdminSapa(admin_id) ON DELETE CASCADE
+);
+
+
+
+
+
+
+
+

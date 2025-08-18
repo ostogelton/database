@@ -1,0 +1,89 @@
+DELIMITER $$
+CREATE PROCEDURE RegisterSchoolCoordinator(
+    IN a_email VARCHAR(50),
+    IN a_firstname VARCHAR(50),
+    IN a_middlename VARCHAR(50),
+    IN a_lastname VARCHAR(50),
+    IN a_password VARCHAR(50)	
+)
+BEGIN
+    IF EXISTS (SELECT 1 FROM SchoolCoordinator WHERE email = a_email) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Email is already registered';
+    ELSE
+        INSERT INTO SchoolCoordinator(email, firstname, middlename, lastname, password)
+        VALUES (a_email, a_firstname, a_middlename, a_lastname, a_password);
+    END IF;
+END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+CREATE PROCEDURE HandleSchoolApproval(
+    IN a_admin_id INT,
+    IN a_school_coordinator_id INT,
+    IN a_status VARCHAR(25)
+)
+BEGIN
+    IF a_status = 'approved' THEN 
+        UPDATE SchoolCoordinator
+        SET admin_id = a_admin_id,
+            is_approved = TRUE
+        WHERE school_coordinator_id = a_school_coordinator_id;
+
+    ELSEIF a_status = 'declined' THEN 
+        UPDATE SchoolCoordinator
+        SET admin_id = a_admin_id, 
+            is_approved = FALSE
+        WHERE school_coordinator_id = a_school_coordinator_id;
+    END IF;
+END $$
+DELIMITER ;
+
+
+
+DELIMITER $$ 
+CREATE PROCEDURE RegisterHospitalCoordinator(
+    IN a_email VARCHAR(50),
+    IN a_firstname VARCHAR(50),
+    IN a_middlename VARCHAR(50),
+    IN a_lastname VARCHAR(50),
+    IN a_password VARCHAR(50)
+)
+BEGIN
+	IF EXISTS (SELECT 1 FROM HospitalCoordinator WHERE email = a_email) THEN
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = 'Email is already exists';
+	ELSE
+		INSERT INTO HospitalCoordinator(email, firstname, middlename, lastname, password)
+		VALUES(a_email, a_firstname, a_middlename, a_lastname, a_password);
+	END IF;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE HandleHospitalCoordinator(
+	IN a_admin_id INT,
+	IN a_hospital_coordinator_id INT,
+	IN a_status VARCHAR(25)
+)
+BEGIN
+	IF a_status = 'approved' THEN
+		UPDATE HopitalCoordinator
+		SET admin_id = a_admin_id,
+		is_approved = TRUE
+		WHERE hopital_coorinator_id = a_hopital_coorinator_id;
+	ELSEIF a_status = 'declined' THEN
+		UPDATE HopitalCoordinator
+		SET admin_id = a_admin_id,
+		is_approved = FALSE
+		WHERE hopital_coorinator_id = a_hopital_coorinator_id;
+	END IF;
+	
+END $$
+DELIMITER ;
+
+
+	
