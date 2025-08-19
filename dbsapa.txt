@@ -37,6 +37,8 @@ CREATE TABLE HospitalPost(
     imageName VARCHAR(255),
     imagePath VARCHAR(255),
     imageFile LONGBLOB,
-    caption TEXT
+    caption TEXT,
+    hospital_coordinator_id INT,
+    FOREIGN KEY (hospital_coordinator_id) REFERENCES HospitalCoordinator(hospital_coordinator_id) ON DELETE CASCADE
 );
 
