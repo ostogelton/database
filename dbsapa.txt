@@ -31,3 +31,12 @@ CREATE TABLE HospitalCoordinator(
     admin_id INT,
     FOREIGN KEY (admin_id) REFERENCES AdminSapa(admin_id) ON DELETE CASCADE
 );
+
+CREATE TABLE HospitalPost(
+    hospita_post_id INT AUTO_INCREMENT PRIMARY KEY,
+    imageName VARCHAR(255),
+    imagePath VARCHAR(255),
+    imageFile LONGBLOB,
+    caption TEXT
+);
+
