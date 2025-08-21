@@ -51,7 +51,7 @@ CREATE TABLE Hospital(
     hospital_objectives VARCHAR(255),
     hospital_profile LONGBLOB,
     hospital_coordinator_id INT,
-    REFERENCES KEY (hospital_coordinator_id) REFERENCES HospitalCoordinator(hospital_coordinator_id) ON DELETE CASCADE
+    FOREIGN KEY (hospital_coordinator_id) REFERENCES HospitalCoordinator(hospital_coordinator_id) ON DELETE CASCADE
 );
 
 CREATE TABLE School(
