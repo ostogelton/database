@@ -87,11 +87,21 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE AddSchool(
     IN a_school_name VARCHAR(255),
-    IN a_school_name VARCHAR(255),
-    
+    IN a_school_number VARCHAR(255),
+    IN a_school_code VARCHAR(255),
+    IN a_school_address VARCHAR(255),
+    IN a_school_bio VARCHAR(255),
+    IN a_school_coordinator_id INT
 )
-
-
-
+BEGIN
+    IF EXISTS (SELECT 1 FROM School school_name = a_school_name) THEN
+        SIGNAL SQLSTATE '4500'
+            SET MESSAGE_TEXT 'School is already exist'
+    ELSE
+        INSERT INTO School(schoo_name, school_number, school_date, school_address, school_bio, school_coordinator_id)
+        VALUES (a_school_name, a_school_number, a_school_code, a_school_address, a_school_bio, a_school_coordinator_id);
+    END IF;
+END $$
+DELIMITER ;
 
 
