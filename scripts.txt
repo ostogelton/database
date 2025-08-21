@@ -79,3 +79,19 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
+
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE AddSchool(
+    IN a_school_name VARCHAR(255),
+    IN a_school_name VARCHAR(255),
+    
+)
+
+
+
+
+
