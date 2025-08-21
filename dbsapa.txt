@@ -54,3 +54,17 @@ CREATE TABLE Hospital(
     REFERENCES (hospital_coordinator_id) REFERENCES HospitalCoordinator(hospital_coordinator_id) ON DELETE CASCADE
 );
 
+CREATE TABLE School(
+    school_id INT AUTO_INCREMENT PRIMARY KEY,
+    school_name VARCHAR(255),
+    school_number VARCHAR(255),
+    school_code VARCHAR(255),
+    school_address VARCHAR(255),
+    school_bio VARCHAR(255),
+    school_coordinator_id INT,
+    FOREIGN KEY (school_coordinator_id) REFERENCES SchoolCoordinator(school_coordinator_id) ON DELETE CASCADE
+);
+
+
+
+
