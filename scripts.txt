@@ -94,9 +94,9 @@ CREATE PROCEDURE AddSchool(
     IN a_school_coordinator_id INT
 )
 BEGIN
-    IF EXISTS (SELECT 1 FROM School school_name = a_school_name) THEN
-        SIGNAL SQLSTATE '4500'
-            SET MESSAGE_TEXT 'School is already exist'
+    IF EXISTS (SELECT 1 FROM School WHERE school_name = a_school_name) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT 'School is already exist';
     ELSE
         INSERT INTO School(school_name, school_number, school_date, school_address, school_bio, school_coordinator_id)
         VALUES (a_school_name, a_school_number, a_school_code, a_school_address, a_school_bio, a_school_coordinator_id);
