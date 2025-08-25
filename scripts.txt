@@ -107,10 +107,9 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE GetSchoolInfo(
-    IN a_school_name,
     IN a_school_coordinator_id
 )
 BEGIN
-     SELECT school_profile, school_name, school_number, school_address, school_bio FROM School WHERE school_name = a_school_name AND school_coordinator_id = a_school_coordinator_id;
+     SELECT school_profile, school_name, school_number, school_address, school_bio FROM School WHERE school_coordinator_id = a_school_coordinator_id;
 END $$
 DELIMITER ;
