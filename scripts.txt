@@ -107,9 +107,18 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE AddStudent(
-    IN s
+    IN a_student_profile LONGBLOB,
+    IN a_student_firstname VARCHAR(255),
+    IN a_student_middlename VARCHAR(255),
+    IN a_student_lastname VARCHAR(255),
+    IN a_student_address TEXT,
+    IN a_student_number INT,
+    IN a_student_email VARCHAR(255),
+    IN a_student_birthdate VARCHAR(255),
+    IN a_student_gender VARCHAR(255)
 )
 BEGIN
-     SELECT school_profile, school_name, school_number, school_address, school_bio FROM School WHERE school_coordinator_id = a_school_coordinator_id;
+     INSERT INTO Student()
+    VALUES ();
 END $$
 DELIMITER ;
