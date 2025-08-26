@@ -119,7 +119,7 @@ CREATE PROCEDURE AddStudent(
     IN a_school_id INT
 )
 BEGIN
-     INSERT INTO Student()
-    VALUES ();
+     INSERT INTO Student(student_profile, student_firstname, student_middlename, student_lastname, student_address, student_number, student_email, student_birthdate, student_gender, school_id)
+    VALUES (a_student_profile, a_student_firstname, a_student_middlename, a_student_lastname, a_student_address, a_student_number, a_student_email, a_student_birthdate, a_student_gender, a_school_id);
 END $$
 DELIMITER ;
