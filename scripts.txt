@@ -115,7 +115,8 @@ CREATE PROCEDURE AddStudent(
     IN a_student_number INT,
     IN a_student_email VARCHAR(255),
     IN a_student_birthdate VARCHAR(255),
-    IN a_student_gender VARCHAR(255)
+    IN a_student_gender VARCHAR(255),
+    IN a_school_id INT
 )
 BEGIN
      INSERT INTO Student()
