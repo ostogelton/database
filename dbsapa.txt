@@ -66,6 +66,7 @@ CREATE TABLE School(
 
 CREATE TABLE Student(
     student_id INT AUTO_INCREMENT PRIMATY KEY,
+    student_profile LONGBLOB,
     student_firstname VARCHAR(255),
     student_middlename VARCHAR(255),
     student_lastname VARCHAR(255),
