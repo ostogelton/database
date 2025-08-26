@@ -64,19 +64,20 @@ CREATE TABLE School(
     FOREIGN KEY (school_coordinator_id) REFERENCES SchoolCoordinator(school_coordinator_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Student(
-    student_id INT AUTO_INCREMENT PRIMATY KEY,
+CREATE TABLE Student (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
     student_profile LONGBLOB,
     student_firstname VARCHAR(255),
     student_middlename VARCHAR(255),
     student_lastname VARCHAR(255),
     student_address TEXT,
-    phone_number INT,
-    student_email VARCHAR(255),
-    student_birthdate VARCHAR(255),
-    student_gender VARCHAR(255),
+    phone_number VARCHAR(20),
+    student_email VARCHAR(255) UNIQUE,
+    student_birthdate DATE,
+    student_gender ENUM('Male', 'Female', 'Other') DEFAULT 'Other',
     school_id INT,
     FOREIGN KEY (school_id) REFERENCES School(school_id) ON DELETE CASCADE
 );
+
 
 
