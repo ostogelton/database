@@ -142,7 +142,7 @@ CREATE PROCEDURE EditCoordinatorProfile(
 )
 BEGIN
     IF EXISTS (SELECT 1 FROM SchoolCoordinator WHERE school_coordinator_id = a_school_coordinator_id) THEN
-    UPDATE SchoolCorordinator 
+    UPDATE SchoolCoordinator 
     SET school_coordinator_profile = a_school_coordinator_profile,
         email = a_email,
         firstname = a_firstname,
