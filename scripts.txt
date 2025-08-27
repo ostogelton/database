@@ -127,9 +127,13 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE AddCoordinatorProfile(
+CREATE PROCEDURE EditCoordinatorProfile(
     IN a_school_coordinator_id INT,
     IN a_school_coordinator_profile LONGBLOB,
+    IN a_email VARCHAR(50),
+    IN a_firstname VARCHAR(50),
+    IN a_middlename VARCHAR(50),
+    IN a_lastname VARCHAR(50),
     IN a_phone_number VARCHAR(50),
     IN a_birthdate DATE,
     IN a_address TEXT,
@@ -141,6 +145,10 @@ BEGIN
     IF EXISTS (SELECT 1 FROM SchoolCoordinator WHERE school_coordinator_id = a_school_coordinator_id) THEN
     UPDATE SchoolCorordinator 
     SET school_coordinator_profile = a_school_coordinator_profile,
+        email = a_email,
+        firstname = a_firstname,
+        middlename = a_middlename,
+        lastname = a_lastname,
         phone_number = a_phone_number,
         birthdate = a_birthdate,
         address = a_address,
