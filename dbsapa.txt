@@ -23,6 +23,7 @@ CREATE TABLE SchoolCoordinator(
 
 CREATE TABLE HospitalCoordinator(
     hospital_coordinator_id INT AUTO_INCREMENT PRIMARY KEY,
+    hospital_coordinator_profile LONGBLOB,
     email VARCHAR(50) NOT NULL UNIQUE,
     firstname VARCHAR(50) NOT NULL,
     middlename VARCHAR(50) NOT NULL,
@@ -37,18 +38,6 @@ CREATE TABLE HospitalPost(
     hospital_post_id INT AUTO_INCREMENT PRIMARY KEY,
     imageFile LONGBLOB,
     caption TEXT,
-    hospital_coordinator_id INT,
-    FOREIGN KEY (hospital_coordinator_id) REFERENCES HospitalCoordinator(hospital_coordinator_id) ON DELETE CASCADE
-);
-
-CREATE TABLE Hospital(
-    hospital_id INT AUTO_INCREMENT PRIMARY KEY,
-    hospital_name VARCHAR(255),
-    hospital_address TEXT,
-    hospital_bio TEXT,
-    hospital_phone VARCHAR(255),
-    hospital_objectives VARCHAR(255),
-    hospital_profile LONGBLOB,
     hospital_coordinator_id INT,
     FOREIGN KEY (hospital_coordinator_id) REFERENCES HospitalCoordinator(hospital_coordinator_id) ON DELETE CASCADE
 );
