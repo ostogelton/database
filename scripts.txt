@@ -11,7 +11,7 @@ BEGIN
     IF EXISTS (SELECT 1 FROM SchoolCoordinator WHERE email = a_email) THEN
         SIGNAL SQLSTATE '45000' 
             SET MESSAGE_TEXT = 'Email is already registered';
-    ELSEIF EXISTS (SELECT 1 FROM SchoolCoordinator WHERE firstname = a_firstname AND middlename = a_middlename AND lasname = a_lastname) THEN
+    ELSEIF EXISTS (SELECT 1 FROM SchoolCoordinator WHERE firstname = a_firstname AND middlename = a_middlename AND lastname = a_lastname) THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Coordinator is already exists';
     ELSEIF EXISTS (SELECT 1 FROM SchoolCoordinator WHERE phone_number = a_phone_number) THEN
