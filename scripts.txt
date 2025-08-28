@@ -4,6 +4,7 @@ CREATE PROCEDURE RegisterSchoolCoordinator(
     IN a_firstname VARCHAR(50),
     IN a_middlename VARCHAR(50),
     IN a_lastname VARCHAR(50),
+    IN a_phone_number VARCHAR(50),
     IN a_password VARCHAR(50)    
 )
 BEGIN
@@ -11,8 +12,8 @@ BEGIN
         SIGNAL SQLSTATE '45000' 
             SET MESSAGE_TEXT = 'Email is already registered';
     ELSE
-        INSERT INTO SchoolCoordinator(email, firstname, middlename, lastname, password)
-        VALUES (a_email, a_firstname, a_middlename, a_lastname, a_password);
+        INSERT INTO SchoolCoordinator(email, firstname, middlename, lastname, phone_number, password)
+        VALUES (a_email, a_firstname, a_middlename, a_lastname, a_phone_number, a_password);
     END IF;
 END $$
 DELIMITER ;
