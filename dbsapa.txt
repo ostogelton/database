@@ -57,7 +57,7 @@ CREATE TABLE School(
     school_profile LONGBLOB,
     school_name VARCHAR(255),
     school_number VARCHAR(255),
-    school_code VARCHAR(255),
+    school_code VARCHAR(255) UNIQUE,
     school_address VARCHAR(255),
     school_bio VARCHAR(255),
     school_coordinator_id INT,
@@ -71,7 +71,7 @@ CREATE TABLE Student (
     student_middlename VARCHAR(255),
     student_lastname VARCHAR(255),
     student_address TEXT,
-    phone_number VARCHAR(20),
+    phone_number VARCHAR(20) UNIQUE,
     student_email VARCHAR(255) UNIQUE,
     student_birthdate DATE,
     student_gender ENUM('Male', 'Female', 'Other') DEFAULT 'Other',
@@ -79,5 +79,41 @@ CREATE TABLE Student (
     FOREIGN KEY (school_id) REFERENCES School(school_id) ON DELETE CASCADE
 );
 
+CREATE TABLE Appointment (
+    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
+    hospital_coordinator_id INT NOT NULL,
+    appointment_date DATETIME NOT NULL,
+    status ENUM('Pending','Approved','Rejected','Completed','Cancelled') DEFAULT 'Pending',
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (hospital_coordinator_id) REFERENCES HospitalCoordinator(hospital_coordinator_id) ON DELETE CASCADE
+);
 
+CREATE TABLE AppointmentStudent (
+    appointment_student_id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_id INT NOT NULL,
+    student_id INT NOT NULL,
+    FOREIGN KEY (appointment_id) REFERENCES Appointment(appointment_id) ON DELETE CASCADE,
+    FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE,
+    UNIQUE (appointment_id, student_id)
+);
 
+CREATE TABLE Billing (
+    billing_id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_id INT NOT NULL,
+    school_id INT NOT NULL,
+    total_students INT NOT NULL DEFAULT 0,
+    total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    status ENUM('Unpaid','Paid','Partial') DEFAULT 'Unpaid',
+    issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (appointment_id) REFERENCES Appointment(appointment_id) ON DELETE CASCADE,
+    FOREIGN KEY (school_id) REFERENCES School(school_id) ON DELETE CASCADE
+);
+
+CREATE TABLE BillingItem (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    billing_id INT NOT NULL,
+    description VARCHAR(255) NOT NULL,  -- e.g. Consultation, Lab Test
+    amount DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (billing_id) REFERENCES Billing(billing_id) ON DELETE CASCADE
+);
