@@ -109,6 +109,9 @@ BEGIN
     ELSEIF EXISTS (SELECT 1 FROM School WHERE school_email = a_school_email) THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Email is already exists';
+    ELSEIF EXISTS (SELECT 1 FROM School WHERE school_number = a_school_number) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Number is already exists';
     ELSE
         INSERT INTO School(school_profile, school_name, school_number, school_code, school_address, school_bio, school_coordinator_id)
         VALUES (a_school_profile, a_school_name, a_school_number, a_school_code, a_school_address, a_school_bio, a_school_coordinator_id);
