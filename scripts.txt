@@ -104,7 +104,7 @@ CREATE PROCEDURE AddSchool(
 BEGIN
     IF EXISTS (SELECT 1 FROM School WHERE school_name = a_school_name) THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'School is already exist';
+            SET MESSAGE_TEXT = 'School already exists';
     ELSE
         INSERT INTO School(school_profile, school_name, school_number, school_code, school_address, school_bio, school_coordinator_id)
         VALUES (a_school_profile, a_school_name, a_school_number, a_school_code, a_school_address, a_school_bio, a_school_coordinator_id);
@@ -112,7 +112,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-DELIMITER $$
 
 CREATE PROCEDURE AddStudent(
     IN a_student_profile LONGBLOB,
