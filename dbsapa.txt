@@ -67,10 +67,10 @@ CREATE TABLE School(
     school_bio VARCHAR(255),
     school_coordinator_id INT,
     is_approved BOOLEAN DEFAULT FALSE,
-    approved_by_admin_id INT,
+    admin_id INT,
     approval_date TIMESTAMP NULL DEFAULT NULL,
     FOREIGN KEY (school_coordinator_id) REFERENCES SchoolCoordinator(school_coordinator_id) ON DELETE CASCADE,
-    FOREIGN KEY (approved_by_admin_id) REFERENCES AdminSapa(admin_id) ON DELETE SET NULL
+    FOREIGN KEY (admin_id) REFERENCES AdminSapa(admin_id) ON DELETE SET NULL
 );
 
 
