@@ -132,7 +132,6 @@ BEGIN
 END $$
 
 DELIMITER ;
-
 DELIMITER $$
 CREATE PROCEDURE EditCoordinatorProfile(
     IN a_school_coordinator_id INT,
@@ -148,20 +147,41 @@ CREATE PROCEDURE EditCoordinatorProfile(
     IN a_bio TEXT
 )
 BEGIN
-    IF EXISTS (SELECT 1 FROM SchoolCoordinator WHERE school_coordinator_id = a_school_coordinator_id) THEN
-    UPDATE SchoolCoordinator 
-    SET school_coordinator_profile = a_school_coordinator_profile,
-        email = a_email,
-        firstname = a_firstname,
-        middlename = a_middlename,
-        lastname = a_lastname,
-        phone_number = a_phone_number,
-        birthdate = a_birthdate,
-        address = a_address,
-        gender = a_gender,
-        bio = a_bio
-    WHERE school_coordinator_id = a_school_coordinator_id;
-END IF;
+    -- Check if the record exists
+    IF NOT EXISTS (SELECT 1 FROM SchoolCoordinator WHERE school_coordinator_id = a_school_coordinator_id) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Coordinator does not exist';
+    ELSEIF EXISTS (SELECT 1 FROM SchoolCoordinator 
+                   WHERE email = a_email 
+                   AND school_coordinator_id <> a_school_coordinator_id) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Email is already registered';
+    ELSEIF EXISTS (SELECT 1 FROM SchoolCoordinator 
+                   WHERE firstname = a_firstname 
+                     AND middlename = a_middlename 
+                     AND lastname = a_lastname
+                     AND school_coordinator_id <> a_school_coordinator_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Coordinator already exists with the same name';
+    ELSEIF EXISTS (SELECT 1 FROM SchoolCoordinator 
+                   WHERE phone_number = a_phone_number
+                     AND school_coordinator_id <> a_school_coordinator_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Phone number is already registered';
+    ELSE
+        UPDATE SchoolCoordinator 
+        SET school_coordinator_profile = a_school_coordinator_profile,
+            email = a_email,
+            firstname = a_firstname,
+            middlename = a_middlename,
+            lastname = a_lastname,
+            phone_number = a_phone_number,
+            birthdate = a_birthdate,
+            address = a_address,
+            gender = a_gender,
+            bio = a_bio
+        WHERE school_coordinator_id = a_school_coordinator_id;
+    END IF;
 END $$
-
 DELIMITER ;
+
