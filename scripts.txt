@@ -127,27 +127,30 @@ END $$
 DELIMITER ;
 
 
-DELIMITER$$
+DELIMITER $$
 CREATE PROCEDURE HandleSchoolApproval(
-   IN a_admin_id INT,
-   IN a_school_id INT,
-   IN a_status VARCHAR(50)
+    IN a_admin_id INT,
+    IN a_school_id INT,
+    IN a_status ENUM('approved','declined')
 )
 BEGIN
-   IF a_status = 'approved' THEN
-   	UPDATE School
-   	SET admin_id = a_admin_id,
-   	is_approved = TRUE
-   	WHERE school_id = a_school_id;
-   
-   ELSEIF a_status = 'declined' THEN
-      	UPDATE School
-   	SET admin_id = a_admin_id,
-   	is_approved = FALSE
-   	WHERE school_id = a_school_id;
-   END IF;
+    IF a_status = 'approved' THEN
+        UPDATE School
+        SET admin_id = a_admin_id,
+            is_approved = TRUE,
+            approval_date = NOW()
+        WHERE school_id = a_school_id;
+
+    ELSEIF a_status = 'declined' THEN
+        UPDATE School
+        SET admin_id = a_admin_id,
+            is_approved = FALSE,
+            approval_date = NOW()
+        WHERE school_id = a_school_id;
+    END IF;
 END$$
 DELIMITER ;
+
    
 
 
