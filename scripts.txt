@@ -212,3 +212,52 @@ BEGIN
 END $$
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE DeleteSchool(
+    IN a_school_id INT
+)
+BEGIN
+    DELETE FROM School WHERE school_id = a_school_id;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE EditSchool(
+    IN a_school_id INT,
+    IN a_school_profile LONGBLOB,
+    IN a_school_name VARCHAR(255),
+    IN a_school_number VARCHAR(255),
+    IN a_school_code VARCHAR(255),
+    IN a_school_email VARCHAR(255),
+    IN a_school_address TEXT,
+    IN a_school_bio TEXT
+)
+BEGIN
+    IF EXISTS (SELECT 1 FROM School WHERE school_name = a_school_name AND school_id <> a_school_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'School is already exists with the same name';
+    ELSEIF EXISTS (SELECT 1 FROM School WHERE school_email = a_school_email AND school_id <> a_school_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Email is already registered';
+    ELSEIF EXISTS (SELECT 1 FROM School WHERE school_number = a_school_number AND school_id <> a_school_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Phone number is already registered';
+    ELSE
+        UPDATE School
+        SET school_profile = a_school_profile,
+            school_name = a_school_name,    
+            school_email = a_school_email,
+            school_number = a_school_number,    
+            school_code = a_school_code,
+            school_address = a_school_address,
+            school_bio = a_school_bio
+        WHERE school_id = a_school_id;
+    END IF;
+END $$
+DELIMITER ;
+
+
+
+
+
+
