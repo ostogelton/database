@@ -305,4 +305,59 @@ DELIMITER ;
 
 
 
+DELIMITER $$
+
+CREATE PROCEDURE AddStudent(
+    IN a_student_profile LONGBLOB,
+    IN a_student_firstname VARCHAR(255),
+    IN a_student_middlename VARCHAR(255),
+    IN a_student_lastname VARCHAR(255),
+    IN a_student_address TEXT,
+    IN a_phone_number VARCHAR(20),
+    IN a_student_email VARCHAR(255),
+    IN a_student_birthdate DATE,
+    IN a_student_gender ENUM('Male','Female','Other'),
+    IN a_school_id INT
+)
+BEGIN
+    IF EXISTS (SELECT 1 FROM Student WHERE student_email = a_student_email) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Email is already registered';
+    ELSEIF EXISTS (SELECT 1 FROM Student WHERE phone_number = a_phone_number) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Phone number is already registered';
+    ELSEIF EXISTS (
+        SELECT 1 FROM Student WHERE student_firstname = a_student_firstname AND student_middlename = a_student_middlename AND student_lastname = a_student_lastname AND school_id = a_school_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Student with this name already exists in this school';
+
+    ELSE
+        INSERT INTO Student (
+            student_profile,
+            student_firstname,
+            student_middlename,
+            student_lastname,
+            student_address,
+            phone_number,
+            student_email,
+            student_birthdate,
+            student_gender,
+            school_id
+        ) VALUES (
+            a_student_profile,
+            a_student_firstname,
+            a_student_middlename,
+            a_student_lastname,
+            a_student_address,
+            a_phone_number,
+            a_student_email,
+            a_student_birthdate,
+            a_student_gender,
+            a_school_id
+        );
+    END IF;
+END$$
+
+DELIMITER ;
+
 
