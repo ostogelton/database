@@ -129,3 +129,5 @@ CREATE TABLE BillingItem (
     amount DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (billing_id) REFERENCES Billing(billing_id) ON DELETE CASCADE
 );
+
+INSERT INTO AdminSapa(fullname, username, password) VALUES('admin','admin','1234');
