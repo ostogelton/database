@@ -168,7 +168,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE EditCoordinatorProfile(
+CREATE PROCEDURE EditSchoolCoordinatorProfile(
     IN a_school_coordinator_id INT,
     IN a_school_coordinator_profile LONGBLOB,
     IN a_email VARCHAR(50),
@@ -218,6 +218,72 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE EditHospitalCoordinatorProfile(
+    IN a_hospital_coordinator_id INT,
+    IN a_hospital_coordinator_profile LONGBLOB,
+    IN a_email VARCHAR(50),
+    IN a_firstname VARCHAR(50),
+    IN a_middlename VARCHAR(50),
+    IN a_lastname VARCHAR(50),
+    IN a_phone_number VARCHAR(50),
+    IN a_birthdate DATE,
+    IN a_address TEXT,
+    IN a_gender VARCHAR(50),
+    IN a_bio TEXT
+)
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM HospitalCoordinator WHERE hospital_coordinator_id = a_hospital_coordinator_id) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Coordinator does not exist';
+    ELSEIF EXISTS (SELECT 1 FROM HospitalCoordinator 
+                   WHERE email = a_email 
+                   AND hospital_coordinator_id <> a_hospital_coordinator_id) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Email is already registered';
+    ELSEIF EXISTS (SELECT 1 FROM HospitalCoordinator 
+                   WHERE firstname = a_firstname 
+                     AND middlename = a_middlename 
+                     AND lastname = a_lastname
+                     AND hosptal_coordinator_id <> a_hospital_coordinator_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Coordinator already exists with the same name';
+    ELSEIF EXISTS (SELECT 1 FROM HospitalCoordinator 
+                   WHERE phone_number = a_phone_number
+                     AND hospital_coordinator_id <> a_hospital_coordinator_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Phone number is already registered';
+    ELSE
+        UPDATE hospitalCoordinator 
+        SET hospital_coordinator_profile = a_hospital_coordinator_profile,
+            email = a_email,
+            firstname = a_firstname,
+            middlename = a_middlename,
+            lastname = a_lastname,
+            phone_number = a_phone_number,
+            birthdate = a_birthdate,
+            address = a_address,
+            gender = a_gender,
+            bio = a_bio
+        WHERE hospital_coordinator_id = a_hospital_coordinator_id;
+    END IF;
+END $$
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 DELIMITER $$
 CREATE PROCEDURE DeleteSchool(
