@@ -242,13 +242,13 @@ BEGIN
                    AND hospital_coordinator_id <> a_hospital_coordinator_id) THEN
         SIGNAL SQLSTATE '45000' 
             SET MESSAGE_TEXT = 'Email is already registered';
-    ELSEIF EXISTS (SELECT 1 FROM HospitalCoordinator 
-                   WHERE firstname = a_firstname 
-                     AND middlename = a_middlename 
-                     AND lastname = a_lastname
-                     AND hosptal_coordinator_id <> a_hospital_coordinator_id) THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Coordinator already exists with the same name';
+ELSEIF EXISTS (SELECT 1 FROM HospitalCoordinator 
+               WHERE firstname = a_firstname 
+                 AND middlename = a_middlename 
+                 AND lastname = a_lastname
+                 AND hospital_coordinator_id <> a_hospital_coordinator_id) THEN
+    SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Coordinator already exists with the same name';
     ELSEIF EXISTS (SELECT 1 FROM HospitalCoordinator 
                    WHERE phone_number = a_phone_number
                      AND hospital_coordinator_id <> a_hospital_coordinator_id) THEN
