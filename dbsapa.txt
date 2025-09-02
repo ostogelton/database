@@ -111,7 +111,6 @@ CREATE TABLE Appointment (
     appointment_id INT AUTO_INCREMENT PRIMARY KEY,
     hospital_coordinator_id INT NOT NULL,
     appointment_date DATETIME NOT NULL,
-    status ENUM('Pending','Approved','Rejected','Completed','Cancelled') DEFAULT 'Pending',
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (hospital_coordinator_id) REFERENCES HospitalCoordinator(hospital_coordinator_id) ON DELETE CASCADE
