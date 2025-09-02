@@ -104,6 +104,36 @@ DELIMITER ;
 
 
 
+DELIMITER $$
+
+CREATE PROCEDURE AddHospitalStaff(
+    IN p_hospital_coordinator_id INT,
+    IN p_staff_profile LONGBLOB,
+    IN p_firstname VARCHAR(50),
+    IN p_middlename VARCHAR(50),
+    IN p_lastname VARCHAR(50),
+    IN p_email VARCHAR(50),
+    IN p_phone_number VARCHAR(50),
+    IN p_birthdate DATE,
+    IN p_gender ENUM('Male','Female','Other'),
+    IN p_role TEXT
+)
+BEGIN
+    IF EXISTS (SELECT 1 FROM HospitalStaff WHERE email = p_email) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Duplicate email not allowed';
+    ELSEIF EXISTS (SELECT 1 FROM HospitalStaff WHERE phone_number = p_phone_number) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Duplicate phone number not allowed';
+    ELSE
+        INSERT INTO HospitalStaff(hospital_coordinator_id, staff_profile, firstname, middlename, lastname, email, phone_number, birthdate, gender, role)
+            VALUES (p_hospital_coordinator_id, p_staff_profile, p_firstname, p_middlename, p_lastname, p_email, p_phone_number, p_birthdate, p_gender, p_role);
+    END IF;
+END$$
+
+DELIMITER ;
+
+
 
 DELIMITER $$
 CREATE PROCEDURE AddSchool(
