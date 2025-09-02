@@ -125,24 +125,5 @@ CREATE TABLE AppointmentStudent (
     UNIQUE (appointment_id, student_id)
 );
 
-CREATE TABLE Billing (
-    billing_id INT AUTO_INCREMENT PRIMARY KEY,
-    appointment_id INT NOT NULL,
-    school_id INT NOT NULL,
-    total_students INT NOT NULL DEFAULT 0,
-    total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    status ENUM('Unpaid','Paid','Partial') DEFAULT 'Unpaid',
-    issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (appointment_id) REFERENCES Appointment(appointment_id) ON DELETE CASCADE,
-    FOREIGN KEY (school_id) REFERENCES School(school_id) ON DELETE CASCADE
-);
-
-CREATE TABLE BillingItem (
-    item_id INT AUTO_INCREMENT PRIMARY KEY,
-    billing_id INT NOT NULL,
-    description VARCHAR(255) NOT NULL,  -- e.g. Consultation, Lab Test
-    amount DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (billing_id) REFERENCES Billing(billing_id) ON DELETE CASCADE
-);
 
 INSERT INTO AdminSapa(fullname, username, password) VALUES('admin','admin','1234');
