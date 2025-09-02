@@ -422,6 +422,59 @@ END$$
 DELIMITER ;
 
 
+DELIMITER $$
+
+CREATE PROCEDURE EditStaff(
+    IN a_staff_id INT,
+    IN a_staff_profile LONGBLOB,
+    IN a_firstname VARCHAR(255),
+    IN a_middlename VARCHAR(255),
+    IN a_lastname VARCHAR(255),
+    IN a_email VARCHAR(255),
+    IN a_phone_number VARCHAR(20),
+    IN a_birthdate DATE,
+    IN a_gender ENUM('Male','Female','Other'),
+    IN a_role VARCHAR(100),
+    IN a_hospital_id INT
+)
+BEGIN
+    IF EXISTS (SELECT 1 FROM Staff WHERE email = a_email AND staff_id <> a_staff_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Email is already registered';
+    ELSEIF EXISTS (SELECT 1 FROM Staff WHERE phone_number = a_phone_number AND staff_id <> a_staff_id) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Phone number is already registered';
+    ELSEIF EXISTS (
+        SELECT 1 FROM Staff 
+        WHERE firstname = a_firstname 
+          AND middlename = a_middlename 
+          AND lastname = a_lastname 
+          AND hospital_id = a_hospital_id
+          AND staff_id <> a_staff_id
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Staff with this name already exists in this hospital';
+
+    ELSE
+        UPDATE Staff
+        SET staff_profile = a_staff_profile,
+            firstname = a_firstname,
+            middlename = a_middlename,
+            lastname = a_lastname,
+            email = a_email,
+            phone_number = a_phone_number,
+            birthdate = a_birthdate,
+            gender = a_gender,
+            role = a_role,
+            hospital_id = a_hospital_id
+        WHERE staff_id = a_staff_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+
+
 
 DELIMITER $$
 
