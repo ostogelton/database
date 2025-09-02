@@ -328,6 +328,18 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE DeleteStaff(
+    IN a_staff_id INT
+)
+BEGIN
+    DELETE FROM HospitalStaff WHERE staff_id = a_staff_id;
+END $$
+DELIMITER ;
+
+
+
+
+DELIMITER $$
 CREATE PROCEDURE EditSchool(
     IN a_school_id INT,
     IN a_school_profile LONGBLOB,
