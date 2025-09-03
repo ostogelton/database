@@ -89,7 +89,7 @@ CREATE TABLE Student (
     student_gender ENUM('Male', 'Female', 'Other') DEFAULT 'Other',
     school_id INT,
     school_coordinator_id INT,
-    FOREIGN KEY (school_coordinator_id) REFERENCES School(school_coordinator_id) ON DELETE CASCADE,
+    FOREIGN KEY (school_coordinator_id) REFERENCES SchoolCoordinator(school_coordinator_id) ON DELETE CASCADE,
     FOREIGN KEY (school_id) REFERENCES School(school_id) ON DELETE CASCADE
 );
 
