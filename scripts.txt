@@ -542,4 +542,18 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE PROCEDURE AddAppointment (
+    IN p_hospital_coordinator_id INT,
+    IN p_appointment_date DATETIME,
+    IN p_notes TEXT
+)
+BEGIN
+    INSERT INTO Appointment (hospital_coordinator_id, appointment_date, notes)
+    VALUES (p_hospital_coordinator_id, p_appointment_date, p_notes);
+END$$
+
+DELIMITER ;
+
 
