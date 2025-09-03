@@ -500,7 +500,7 @@ CREATE PROCEDURE AddStudent(
     IN a_student_birthdate DATE,
     IN a_student_gender ENUM('Male','Female','Other'),
     IN a_school_id INT,
-    IN a_school_coorditor_id INT
+    IN a_school_coordinator_id INT
 )
 BEGIN
     IF EXISTS (SELECT 1 FROM Student WHERE student_email = a_student_email) THEN
@@ -538,7 +538,7 @@ BEGIN
             a_student_birthdate,
             a_student_gender,
             a_school_id,
-            a_school_coordiantor_id
+            a_school_coordinator_id
         );
     END IF;
 END$$
