@@ -571,4 +571,17 @@ END$$
 DELIMITER ;
 
 
+DELIMITER $$
+
+CREATE PROCEDURE addAppointmentStudent(
+    IN p_appointment_id INT,
+    IN p_student_id INT
+)
+BEGIN
+    INSERT INTO AppointmentStudent (appointment_id, student_id)
+    VALUES (p_appointment_id, p_student_id);
+END $$
+
+DELIMITER ;
+
 
