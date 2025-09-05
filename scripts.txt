@@ -573,15 +573,32 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE PROCEDURE addAppointmentStudent(
+CREATE PROCEDURE addAppointmentStudents(
     IN p_appointment_id INT,
-    IN p_student_id INT
+    IN p_student_ids TEXT
 )
 BEGIN
-    INSERT INTO AppointmentStudent (appointment_id, student_id)
-    VALUES (p_appointment_id, p_student_id);
-END $$
+    DECLARE done INT DEFAULT 0;
+    DECLARE cur_student_id INT;
+    
+    WHILE LENGTH(p_student_ids) > 0 DO
+        -- Get the next student_id
+        SET cur_student_id = CAST(SUBSTRING_INDEX(p_student_ids, ',', 1) AS UNSIGNED);
+
+        -- Insert into AppointmentStudent
+        INSERT IGNORE INTO AppointmentStudent (appointment_id, student_id)
+        VALUES (p_appointment_id, cur_student_id);
+
+        -- Remove the processed ID from the string
+        IF LOCATE(',', p_student_ids) > 0 THEN
+            SET p_student_ids = SUBSTRING(p_student_ids, LOCATE(',', p_student_ids) + 1);
+        ELSE
+            SET p_student_ids = '';
+        END IF;
+    END WHILE;
+END$$
 
 DELIMITER ;
+
 
 
