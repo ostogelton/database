@@ -602,3 +602,19 @@ DELIMITER ;
 
 
 
+
+DELIMITER $$
+
+CREATE PROCEDURE AddHospitalPost (
+    IN p_hospital_coordinator_id INT,
+    IN p_title VARCHAR(255),
+    IN p_content TEXT,
+    IN p_imageFile LONGBLOB
+)
+BEGIN
+    INSERT INTO HospitalPost (hospital_coordinator_id, title, content, imageFile)
+    VALUES (p_hospital_coordinator_id, p_title, p_content, p_imageFile);
+END$$
+
+DELIMITER ;
+
